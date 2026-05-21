@@ -3,20 +3,20 @@ package executor
 import (
 	"bufio"
 	"fmt"
-	"log"
+	"forge/internal/task"
 	"os/exec"
 )
 
-func Execute(task string, args []string) {
-	cmd := exec.Command(task, args...)
+func Execute(task task.Task) error {
+	cmd := exec.Command(task.Command, task.Args...)
 
 	stdOut, err := cmd.StdoutPipe()
 	if err != nil {
-		log.Fatal(err)
+		return nil
 	}
 
 	if err = cmd.Start(); err != nil {
-		log.Fatal(err)
+		return nil
 	}
 
 	scanner := bufio.NewScanner(stdOut)
@@ -25,7 +25,9 @@ func Execute(task string, args []string) {
 		fmt.Println(scanner.Text())
 	}
 
-	if err = cmd.Wait(); err != nil {
-		log.Fatal(err)
+	if err := scanner.Err(); err != nil {
+		return err
 	}
+
+	return cmd.Wait()
 }

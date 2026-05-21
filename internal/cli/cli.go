@@ -13,11 +13,11 @@ type Cli struct {
 func ParseArgs(args []string) (*Cli, error) {
 
 	if len(args) < 2 {
-		return nil, fmt.Errorf("cmd not found\n")
+		return nil, fmt.Errorf("cmd not found")
 	}
 
 	if len(args) < 3 {
-		return nil, fmt.Errorf("task not found\n")
+		return nil, fmt.Errorf("task not found")
 	}
 	var arguments []string
 

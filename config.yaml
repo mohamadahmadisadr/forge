@@ -1,0 +1,8 @@
+tasks:
+  greet:
+    cmd: echo
+    args: ["hello"]
+  
+  ping:
+    cmd: ping
+    args: ["8.8.8.8"]
