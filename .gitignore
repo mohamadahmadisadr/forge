@@ -1,0 +1,32 @@
+# macOS
+.DS_Store
+
+# Editor and IDE metadata
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Go build artifacts
+/bin/
+/build/
+/dist/
+/forge
+*.exe
+*.dll
+*.so
+*.dylib
+*.test
+
+# Test and coverage output
+*.out
+coverage.*
+
+# Temporary files
+/tmp/
+*.tmp
