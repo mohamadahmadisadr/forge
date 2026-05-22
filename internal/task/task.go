@@ -7,9 +7,9 @@ import (
 )
 
 type Task struct {
-	Name    string   `yaml:"name"`
-	Command string   `yaml:"cmd"`
-	Args    []string `yaml:"args"`
+	Command  string   `yaml:"cmd"`
+	Args     []string `yaml:"args"`
+	Parallel []string `yaml:"parallel,omitempty"`
 }
 
 type YamlConfig struct {

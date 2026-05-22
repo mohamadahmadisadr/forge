@@ -12,11 +12,11 @@ func Execute(task task.Task) error {
 
 	stdOut, err := cmd.StdoutPipe()
 	if err != nil {
-		return nil
+		return err
 	}
 
 	if err = cmd.Start(); err != nil {
-		return nil
+		return err
 	}
 
 	scanner := bufio.NewScanner(stdOut)

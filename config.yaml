@@ -1,8 +1,13 @@
 tasks:
-  greet:
-    cmd: echo
-    args: ["hello"]
-  
-  ping:
-    cmd: ping
-    args: ["8.8.8.8"]
+  backend:
+    cmd: go
+    args: ["build", "./backend"]
+
+  frontend:
+    cmd: npm
+    args: ["run", "build"]
+
+  all:
+    parallel:
+      - backend
+      - frontend
