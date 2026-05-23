@@ -7,27 +7,36 @@ import (
 	"os/exec"
 )
 
-func Execute(task task.Task) error {
-	cmd := exec.Command(task.Command, task.Args...)
+func Execute(node *task.TaskNode) error {
+	cmd := exec.Command(node.Command, node.Args...)
 
-	stdOut, err := cmd.StdoutPipe()
+	stdout, err := cmd.StdoutPipe()
 	if err != nil {
 		return err
 	}
 
-	if err = cmd.Start(); err != nil {
+	stderr, err := cmd.StderrPipe()
+	if err != nil {
 		return err
 	}
 
-	scanner := bufio.NewScanner(stdOut)
-
-	for scanner.Scan() {
-		fmt.Println(scanner.Text())
-	}
-
-	if err := scanner.Err(); err != nil {
+	if err := cmd.Start(); err != nil {
 		return err
 	}
+
+	go streamOutput(stdout, node.Name)
+	go streamOutput(stderr, node.Name)
 
 	return cmd.Wait()
+}
+
+func streamOutput(pipe interface {
+	Read([]byte) (int, error)
+}, taskName string) {
+
+	scanner := bufio.NewScanner(pipe)
+
+	for scanner.Scan() {
+		fmt.Printf("[%s] %s\n", taskName, scanner.Text())
+	}
 }

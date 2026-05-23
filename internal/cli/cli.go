@@ -1,33 +1,23 @@
 package cli
 
-import (
-	"fmt"
-)
+import "fmt"
 
-type Cli struct {
+type CLI struct {
 	Command string
-	Task    string
-	Args    []string
+	Target  string
 }
 
-func ParseArgs(args []string) (*Cli, error) {
-
+func ParseArgs(args []string) (*CLI, error) {
 	if len(args) < 2 {
-		return nil, fmt.Errorf("cmd not found")
+		return nil, fmt.Errorf("command required")
 	}
 
 	if len(args) < 3 {
-		return nil, fmt.Errorf("task not found")
-	}
-	var arguments []string
-
-	if len(args) > 3 {
-		arguments = args[3:]
+		return nil, fmt.Errorf("target required")
 	}
 
-	return &Cli{
+	return &CLI{
 		Command: args[1],
-		Task:    args[2],
-		Args:    arguments,
+		Target:  args[2],
 	}, nil
 }

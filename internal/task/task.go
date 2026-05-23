@@ -1,33 +1,19 @@
 package task
 
-import (
-	"os"
-
-	"gopkg.in/yaml.v3"
-)
-
 type Task struct {
-	Command  string   `yaml:"cmd"`
-	Args     []string `yaml:"args"`
-	Parallel []string `yaml:"parallel,omitempty"`
+	Command   string   `yaml:"cmd"`
+	Args      []string `yaml:"args"`
+	Parallel  []string `yaml:"parallel,omitempty"`
+	DependsOn []string `yaml:"depends_on,omitempty"`
 }
 
-type YamlConfig struct {
+type Config struct {
 	Tasks map[string]Task `yaml:"tasks"`
 }
 
-func GetYamlConfig() (*YamlConfig, error) {
-
-	data, err := os.ReadFile("config.yaml")
-	if err != nil {
-		return nil, err
-	}
-
-	var config YamlConfig
-
-	err = yaml.Unmarshal(data, &config)
-	if err != nil {
-		return nil, err
-	}
-	return &config, nil
+type TaskNode struct {
+	Name      string
+	Command   string
+	Args      []string
+	DependsOn []string
 }

@@ -8,19 +8,17 @@ import (
 )
 
 func main() {
-
 	args, err := cli.ParseArgs(os.Args)
 	if err != nil {
 		log.Fatal(err)
-		return
 	}
-	data, err := task.GetYamlConfig()
-	if err != nil {
-		log.Fatal(err)
-	}
-	err = cli.RunCommand(args, data)
+
+	conf, err := task.LoadConfig("config.yaml")
 	if err != nil {
 		log.Fatal(err)
 	}
 
+	if err := cli.RunCommand(args, conf); err != nil {
+		log.Fatal(err)
+	}
 }

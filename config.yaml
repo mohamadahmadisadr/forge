@@ -1,13 +1,28 @@
 tasks:
-  backend:
+  build:
     cmd: go
-    args: ["build", "./backend"]
+    args:
+      - build
+      - ./...
 
-  frontend:
-    cmd: npm
-    args: ["run", "build"]
+  test:
+    cmd: go
+    args:
+      - test
+      - ./...
+    depends_on:
+      - build
+
+  deploy:
+    cmd: echo
+    args:
+      - deploying...
+    depends_on:
+      - test
 
   all:
-    parallel:
-      - backend
-      - frontend
+    cmd: echo
+    args:
+      - workflow
+    depends_on:
+      - deploy
